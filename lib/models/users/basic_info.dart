@@ -1,37 +1,60 @@
-import 'package:json_annotation/json_annotation.dart';
+class AuthResponse {
+  final User user;
+  final String idUser;
+  final String type;
+  final AccessToken accessToken;
+  final String message;
 
-part 'basic_info.g.dart';
+  AuthResponse({
+    required this.user,
+    required this.idUser,
+    required this.type,
+    required this.accessToken,
+    required this.message,
+  });
 
-@JsonSerializable()
-class BasicInfo {
+  factory AuthResponse.fromJson(Map<String, dynamic> json) {
+    return AuthResponse(
+      user: User.fromJson(json['user'] ?? {}), // Manejo de nulo
+      idUser: json['id_user']?.toString() ?? '', // Conversión segura
+      type: json['type']?.toString() ?? 'user', // Valor por defecto
+      accessToken: AccessToken.fromJson(json['access_token'] ?? {}), // Manejo de nulo
+      message: json['message']?.toString() ?? '', // Conversión segura
+    );
+  }
+}
+
+class User {
+  final Email? email; // Cambiado a nullable
+  final Phone phone;
   final String name;
   final String password;
-
-  @JsonKey(name: 'language_preference')
   final String languagePreference;
+  final String? profilePicture;
 
-  @JsonKey(name: 'profile_picture')
-  final String profilePicture;
-
-  final Email email;
-  final Phone phone;
-
-  BasicInfo({
+  User({
+    this.email, // Ya no es required
+    required this.phone,
     required this.name,
     required this.password,
     required this.languagePreference,
-    required this.profilePicture,
-    required this.email,
-    required this.phone,
+    this.profilePicture,
   });
 
-  factory BasicInfo.fromJson(Map<String, dynamic> json) =>
-      _$BasicInfoFromJson(json);
-
-  Map<String, dynamic> toJson() => _$BasicInfoToJson(this);
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      email: json['email'] != null && json['email']['address']?.toString().isNotEmpty == true
+          ? Email.fromJson(json['email'])
+          : null, // Solo crea Email si tiene datos
+      phone: Phone.fromJson(json['phone'] ?? {}),
+      name: json['name']?.toString() ?? '',
+      password: json['password']?.toString() ?? '',
+      languagePreference: json['language_preference']?.toString() ?? 'es_MX',
+      profilePicture: json['profile_picture']?.toString(),
+    );
+  }
 }
 
-@JsonSerializable()
 class Email {
   final String address;
   final bool verified;
@@ -41,17 +64,17 @@ class Email {
     required this.verified,
   });
 
-  factory Email.fromJson(Map<String, dynamic> json) => _$EmailFromJson(json);
-  Map<String, dynamic> toJson() => _$EmailToJson(this);
+  factory Email.fromJson(Map<String, dynamic> json) {
+    return Email(
+      address: json['address']?.toString() ?? '',
+      verified: json['verified'] ?? false,
+    );
+  }
 }
 
-@JsonSerializable()
 class Phone {
   final String number;
-
-  @JsonKey(name: 'country_code')
   final String countryCode;
-
   final bool verified;
 
   Phone({
@@ -60,6 +83,28 @@ class Phone {
     required this.verified,
   });
 
-  factory Phone.fromJson(Map<String, dynamic> json) => _$PhoneFromJson(json);
-  Map<String, dynamic> toJson() => _$PhoneToJson(this);
+  factory Phone.fromJson(Map<String, dynamic> json) {
+    return Phone(
+      number: json['number']?.toString() ?? '',
+      countryCode: json['country_code']?.toString() ?? '+52',
+      verified: json['verified'] ?? false,
+    );
+  }
+}
+
+class AccessToken {
+  final String name;
+  final String value;
+
+  AccessToken({
+    required this.name,
+    required this.value,
+  });
+
+  factory AccessToken.fromJson(Map<String, dynamic> json) {
+    return AccessToken(
+      name: json['name']?.toString() ?? 'access_token',
+      value: json['value']?.toString() ?? '',
+    );
+  }
 }

@@ -1,9 +1,9 @@
-import 'package:app_ocotaxi/models/driver/drivers_info.dart';
 import 'package:app_ocotaxi/services/drivers/driverService.dart';
 import 'package:app_ocotaxi/views/componets/cards/card_driver.dart';
 import 'package:app_ocotaxi/views/componets/layouts/titlePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../models/driver/drivers_info.dart';
 
 class BetterDrivers extends StatefulWidget {
   const BetterDrivers({super.key});

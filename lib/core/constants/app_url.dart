@@ -9,5 +9,11 @@ abstract class AppUrl{
   static final Uri urlAllDriver = Uri.parse('$url/driver');
   static final Uri urlCommentDriver = Uri.parse('$url/driver');
   static final String urlDriverById = '$url/driver/';
+  
+  //routes for fee
+  static final String urlFeeByDistance = '$url/rates/search/';
+
+  //routes for reservations
+  static final Uri urlRegisterReservation = Uri.parse("$url/reservations");
 
 }

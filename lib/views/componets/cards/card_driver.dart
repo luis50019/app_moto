@@ -1,9 +1,9 @@
 import 'package:app_ocotaxi/core/constants/app_colors.dart';
 import 'package:app_ocotaxi/core/constants/app_styles.dart';
 import 'package:app_ocotaxi/core/constants/routes.dart';
+import 'package:app_ocotaxi/models/driver/drivers_info.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../models/driver/drivers_info.dart';
 
 class CardDriver extends StatelessWidget {
   final User info;

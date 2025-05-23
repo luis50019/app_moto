@@ -256,7 +256,7 @@ class _FormDataState extends State<FormData> {
                             );
                       if (!response) {
                         final errors = authProvider.errorAuth!.errors;
-                        for (int i = 0; i < errors.length; i++) {
+                        for (int i = 0; i < errors!.length; i++) {
                           if (errors[i].path == 'n') {
                             messageUsername = errors[i].message.toString();
                           }

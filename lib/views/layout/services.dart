@@ -1,3 +1,4 @@
+import 'package:app_ocotaxi/core/constants/routes.dart';
 import 'package:app_ocotaxi/views/componets/cards/cardService.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -18,12 +19,23 @@ class _ListServiceState extends State<ListService> {
       child: ListView(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        children:[
-          Cardservice(service: "Envíos", url_photo: "assets/images/repartos.png"),
+        children: [
+          Cardservice(
+            service: "Envíos",
+            url_photo: "assets/images/repartos.png",
+          ),
           SizedBox(width: 10),
-          Cardservice(backgroudCard: AppColors.backgroudCardServideDark,service: "Servicio Privado", url_photo: "assets/images/mototaxi.png"),
+          Cardservice(
+            backgroudCard: AppColors.backgroudCardServideDark,
+            route: Routes.reservationPrivate,
+            service: "Servicio Privado",
+            url_photo: "assets/images/mototaxi.png",
+          ),
           SizedBox(width: 10),
-          Cardservice(service: "Servicio Compartido", url_photo: "assets/images/imagePeople.png"),
+          Cardservice(
+            service: "Servicio Compartido",
+            url_photo: "assets/images/imagePeople.png",
+          ),
         ],
       ),
     );

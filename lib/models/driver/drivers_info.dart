@@ -43,6 +43,7 @@ class User {
       v: json['__v'] ?? 0,
     );
   }
+
 }
 
 class BasicInfo {
