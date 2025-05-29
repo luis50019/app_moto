@@ -160,14 +160,6 @@ class _ListReservationState extends State<ListReservation> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 10),
-              Text(
-                "Luis Angel",
-                style: TextStyle(
-                  fontSize: 40,
-                  color: AppColors.textOrange,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
               const SizedBox(height: 20),
               const Titlepage(text1: "Solicitudes", text2: "de viaje"),
               Expanded(

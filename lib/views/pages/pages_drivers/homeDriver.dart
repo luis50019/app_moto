@@ -24,10 +24,29 @@ class _HomedriverState extends State<Homedriver> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 10,),
-              Text("Luis Angel",style: TextStyle(fontSize:40,color: AppColors.textOrange,fontWeight: FontWeight.bold),),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               const Titlepage(text1: "Inicio"),
+              const SizedBox(height: 20),
+              Text(
+                "¡Bienvenido, conductor!",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "Estamos listos para comenzar tu jornada. Aquí podrás ver tus reservas y solicitudes.",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[700],
+                ),
+              ),
+              const SizedBox(height: 20),
+              // Puedes agregar aquí más contenido o widgets como CardService()
+              // Por ejemplo:
+              // CardService(), // Si quieres mostrar un servicio o imagen
             ],
           ),
         ),

@@ -44,7 +44,7 @@ class _CardServiceState extends State<CardService> {
     final response = await DriverService.AcceptReservation(widget.infoReservation.id);
     if (response) {
       final driverProvider = Provider.of<DriverProvider>(context, listen: false);
-      driverProvider.saveReservation(widget.infoReservation.id);
+      await driverProvider.saveReservation(widget.infoReservation.id);
       // Mostrar el SnackBar
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -53,7 +53,6 @@ class _CardServiceState extends State<CardService> {
           duration: Duration(seconds: 3),
         ),
       );
-      await loadReservations();
     } else {
       debugPrint("No se canceló");
     }

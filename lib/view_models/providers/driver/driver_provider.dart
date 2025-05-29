@@ -27,13 +27,15 @@ class DriverProvider extends ChangeNotifier {
   void createNewReservation(ReservationResponse newReservation)async{
     _reservation = newReservation;
     status = true;
+    alreadyExistReservation = true;
     await ReservationStorage.saveReservation(_reservation!.data.id);
     notifyListeners();
   }
 
-  void saveReservation(String id){
-    ReservationDriverStorage.saveReservation(id);
+  Future<void> saveReservation(String id)async {
+    await ReservationDriverStorage.saveReservation(id);
     alreadyExistReservation = true;
+    status = true;
     notifyListeners();
   }
 
