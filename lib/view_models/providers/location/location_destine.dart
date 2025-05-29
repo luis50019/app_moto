@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:provider/provider.dart';
+
+import '../../../models/fee/model_fee.dart';
+import '../services/reservation_provider.dart';
 
 class LocationDestine extends ChangeNotifier {
   LatLng? _destination;
@@ -14,13 +18,18 @@ class LocationDestine extends ChangeNotifier {
     notifyListeners();
   }
 
+  void cancelTrip(){
+    _destination = null;
+    _locationName = "";
+    debugPrint("borrando");
+    notifyListeners();
+  }
+
   bool alreadyExistLocation(){
     return _locationName!.isNotEmpty?true:false;
   }
 
   LatLng get getDestination{
-    //debugPrint(_destination!.longitude.toString()+"->-"+_destination!.latitude.toString()+"");
-    //LatLng(16.791485, -96.675483)
     return _destination!;
   }
 

@@ -31,7 +31,7 @@ class _HeaderLocationState extends State<HeaderLocation> {
       preferredSize: const Size.fromHeight(120),
       child: Consumer<LocationProvider>(
         builder: (context, locationProvider, child) {
-          final location = locationProvider?.location?.first; // Tomamos el primer Placemark
+          final location = locationProvider?.location?.first;
 
           return Container(
             decoration: const BoxDecoration(
@@ -54,7 +54,13 @@ class _HeaderLocationState extends State<HeaderLocation> {
                       children: [
                         widget.backButton == true
                             ? GestureDetector(
-                          onTap: () => context.pop(),
+                          onTap: (){
+                            if(widget.url.isEmpty){
+                              context.pop();
+                            }else{
+                              context.pushReplacement(widget.url);
+                            }
+                          },
                           child: const Icon(
                             Icons.arrow_back,
                             color: Colors.white,

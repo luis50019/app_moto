@@ -17,6 +17,8 @@ abstract class AppStyle {
   static final TextStyle textRating = TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.deepOrange,);
   static final TextStyle textMedium = TextStyle(fontSize: 60, fontWeight: FontWeight.w200, color: Colors.white,);
   static final TextStyle textBold = TextStyle(fontSize: 60, fontWeight: FontWeight.w400, color: Colors.white,);
+  static final TextStyle texBoldDark = TextStyle(fontSize: 35,color: Colors.black,fontWeight: FontWeight.bold);
+  static final TextStyle textCode = TextStyle(fontSize: 60,color: Colors.deepOrange,fontWeight: FontWeight.w300);
 
   //form
   static final TextStyle labelText = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);

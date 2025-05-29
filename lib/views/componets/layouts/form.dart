@@ -271,8 +271,12 @@ class _FormDataState extends State<FormData> {
                         return;
                       }
                       cleanMessages();
-                      authProvider.showData();
-                      context.pushReplacement(Routes.home);
+                      if(await authProvider.isUser()){
+                        context.pushReplacement(Routes.home);
+                      }else{
+                        debugPrint("hola");
+                        context.pushReplacement(Routes.homeDriver);
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.background,
@@ -289,19 +293,18 @@ class _FormDataState extends State<FormData> {
                     child: Text(widget.messageButton.toString()),
                   ),
                   SizedBox(height: 20),
-                  Text(
-                    "${authProvider.errorAuth?.message != null
-                        ? authProvider.errorAuth?.message.toString()
-                        : authProvider.isAuth
-                        ? "proceso exitoso"
-                        : ""}",
-                    style: TextStyle(
-                      color: authProvider.isAuth ? Colors.green : Colors.red,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
-                  ),
-                ],
+              Text(
+                "${authProvider.errorAuth?.message != null
+                    ? authProvider.errorAuth?.message.toString()
+                    : authProvider.isAuth
+                    ? ""
+                    : ""}",
+                style: TextStyle(
+                  color: authProvider.isAuth ? Colors.green : Colors.red,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                )
+              )],
               ),
             ),
             Row(

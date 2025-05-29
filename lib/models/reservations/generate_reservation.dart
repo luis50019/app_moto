@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:latlong2/latlong.dart';
 
 class ReservationResponse {
@@ -72,7 +71,7 @@ class ReservationData {
       id: json['_id'],
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
-      v: json['__v'],
+      v: json['__v'] ?? 0, // Usamos 0 como valor por defecto si no viene
     );
   }
 
@@ -106,7 +105,7 @@ class Route {
     return Route(
       destination: LocationPoint.fromJson(json['destination']),
       start: LocationPoint.fromJson(json['start']),
-      distance: json['distance'],
+      distance: json['distance'] ?? 0, // Valor por defecto si no viene
     );
   }
 
@@ -131,8 +130,8 @@ class LocationPoint {
 
   factory LocationPoint.fromJson(Map<String, dynamic> json) {
     return LocationPoint(
-      lat: json['lat'].toDouble(),
-      lng: json['lng'].toDouble(),
+      lat: (json['lat'] as num).toDouble(), // Aseguramos conversión a double
+      lng: (json['lng'] as num).toDouble(),
     );
   }
 
@@ -154,7 +153,7 @@ class ReservationState {
 
   factory ReservationState.fromJson(Map<String, dynamic> json) {
     return ReservationState(
-      general: json['general'],
+      general: json['general'] ?? 'pendiente', // Valor por defecto
     );
   }
 
@@ -162,9 +161,9 @@ class ReservationState {
     'general': general,
   };
 
-  bool get isPending => general == 'pendiente';
-  bool get isCompleted => general == 'completado';
-  bool get isCancelled => general == 'cancelado';
+  bool get isPending => general.toLowerCase() == 'pendiente';
+  bool get isCompleted => general.toLowerCase() == 'completado';
+  bool get isCancelled => general.toLowerCase() == 'cancelado';
 }
 
 class Security {
@@ -186,7 +185,7 @@ class Security {
 }
 
 class Pay {
-  final String methodo;
+  final String methodo; // Nota: "methodo" parece ser un typo, debería ser "método" o "method"
   final String state;
 
   Pay({
@@ -206,8 +205,8 @@ class Pay {
     'state': state,
   };
 
-  bool get isPending => state == 'pendiente';
-  bool get isPaid => state == 'pagado';
-  bool get isCash => methodo == 'efectivo';
-  bool get isCard => methodo == 'tarjeta';
+  bool get isPending => state.toLowerCase() == 'pendiente';
+  bool get isPaid => state.toLowerCase() == 'pagado';
+  bool get isCash => methodo.toLowerCase() == 'efectivo';
+  bool get isCard => methodo.toLowerCase() == 'tarjeta';
 }

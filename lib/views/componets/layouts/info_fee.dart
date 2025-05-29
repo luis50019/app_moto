@@ -19,7 +19,8 @@ class _InfoFeeState extends State<InfoFee> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      Provider.of<ReservationProvider>(context, listen: false,);
+      final fee = Provider.of<ReservationProvider>(context, listen: false,);
+      await fee.getFee();
     });
   }
 

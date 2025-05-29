@@ -11,12 +11,13 @@ class CustomInput extends StatefulWidget {
   final String labelText;
   final String? placeholder;
   final bool readOnly;
+  final bool iconView;
   const CustomInput({
     super.key,
     this.valueInitial = "",
     this.url = "",
     required this.labelText,
-    this.placeholder = "Ingrese la informacion",this.readOnly =false,
+    this.placeholder = "Ingrese la informacion",this.readOnly =false, this.iconView = false,
   });
 
   @override
@@ -33,7 +34,7 @@ class _CustomInputState extends State<CustomInput> {
         TextFormField(
           readOnly: widget.readOnly,
           decoration: InputDecoration(
-            suffixIcon: CustomIconEdit(icon: Icon(Icons.edit), url: widget.url,),
+            suffixIcon: widget.iconView?CustomIconEdit(icon: Icon(Icons.edit), url: widget.url,):null,
             enabledBorder: CustomBorderStyle.borderEnable,
             focusedBorder: CustomBorderStyle.borderFocus,
             errorBorder: CustomBorderStyle.borderError,

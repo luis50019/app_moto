@@ -1,4 +1,5 @@
 import 'package:app_ocotaxi/core/router/app_router.dart';
+import 'package:app_ocotaxi/view_models/providers/driver/driver_provider.dart';
 import 'package:app_ocotaxi/view_models/providers/location/location_destine.dart';
 import 'package:app_ocotaxi/view_models/providers/auth_provider.dart';
 import 'package:app_ocotaxi/view_models/providers/location/location_provider.dart';
@@ -12,6 +13,7 @@ void main() {
     ChangeNotifierProvider(create: (_)=>LocationProvider()),
     ChangeNotifierProvider(create: (_)=>LocationDestine()),
     ChangeNotifierProvider(create: (_)=>ReservationProvider()),
+    ChangeNotifierProvider(create: (_)=>DriverProvider()),
   ], child: MyApp(),));
 }
 

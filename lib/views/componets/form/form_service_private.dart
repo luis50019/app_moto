@@ -22,27 +22,12 @@ class _FormServicePrivateState extends State<FormServicePrivate> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final locationUser = Provider.of<LocationProvider>(context, listen: false,);
-      await locationUser.getLocationUser();
-      final destinationProvider = Provider.of<LocationDestine>(context, listen: false,);
-      final reservationProvider = Provider.of<ReservationProvider>(context, listen: false,);
-
-      if (destinationProvider.alreadyExistLocation()) {
-        double distance = locationUser.calculateDistance(
-          destinationProvider.getDestination,
-        );
-        reservationProvider.setDistanceTrip(distance);
-      }else{
-        debugPrint("No entro");
-      }
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     final locationProvider = Provider.of<LocationProvider>(context);
-    final locationDestine = Provider.of<LocationDestine>(context);
+    final locationDestine = Provider.of<LocationDestine>(context,listen: false);
     final currentLocation = locationProvider.location?.first;
 
     return Padding(
@@ -64,9 +49,9 @@ class _FormServicePrivateState extends State<FormServicePrivate> {
                   readOnly: true,
                 ),
                 const SizedBox(height: 15),
-                CustomInput(
+                CustomInput(iconView: true,
                   labelText: "Ubicacion destino",
-                  placeholder: locationDestine.locationName,
+                  placeholder: locationDestine.locationName != ""?locationDestine.locationName:"",
                   url: Routes.mapPage,
                   readOnly: true,
                 ),

@@ -28,6 +28,7 @@ class LocationProvider extends ChangeNotifier {
     try {
       _isLoading = true;
       notifyListeners();
+      await getCurrentLocation();
 
       // ✅ Obtenemos la ubicación con coordenadas
       _position = await Geolocator.getCurrentPosition(

@@ -23,7 +23,11 @@ class _SplashScreenState extends State<SplashScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final myProvider = Provider.of<AuthProvider>(context, listen: false);
       if(await myProvider.AlreadyTokenExist()){
-        handlerNavigator(Routes.home);
+        if(await myProvider.isUser()) {
+          handlerNavigator(Routes.home);
+        }else {
+          handlerNavigator(Routes.homeDriver);
+        }
       }else{
         handlerNavigator(Routes.login);
       }
@@ -38,7 +42,17 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: FlutterLogo(size: 200,),),);
+    return Scaffold(
+      body: Center(
+        child:Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset("assets/images/logo.png"),
+            Text("Cargando ...")
+          ],
+        )
+      ),
+    );
   }
 }
 

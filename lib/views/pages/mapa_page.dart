@@ -15,6 +15,9 @@ import 'package:location/location.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
+import '../../view_models/providers/location/location_provider.dart';
+import '../../view_models/providers/services/reservation_provider.dart';
+
 class MapaPage extends StatefulWidget {
   const MapaPage({super.key,});
 
@@ -86,7 +89,7 @@ class _OpenStreetMapScreenState extends State<MapaPage> {
           "&addressdetails=1"
           "&limit=10"
           "&bounded=1"
-          "&polygon_geojson=1"  // Para geometrías más detalladas
+          "&polygon_geojson=1"
           "&namedetails=1"
           "&viewbox=${ocotlanMinLon},${ocotlanMaxLat},${ocotlanMaxLon},${ocotlanMinLat}"
           "&street=",
@@ -108,21 +111,17 @@ class _OpenStreetMapScreenState extends State<MapaPage> {
           // Parseo de alta precisión (7 decimales)
           final lat = double.parse((place['lat'] as String));
           final lon = double.parse((place['lon'] as String));
-
-          // Validación adicional de ubicación dentro de Ocotlán
           callesOcotlan.add({
             'name': place['display_name'],
             'lat': lat,
             'lon': lon,
-            'osm_type': place['osm_type'], // Tipo de elemento en OSM
-            'class': place['class'], // Clasificación OSM
+            'osm_type': place['osm_type'],
+            'class': place['class'],
           });
         }
 
         if (callesOcotlan.isNotEmpty) {
-          // Ordenar por tipo de elemento (priorizando nodos sobre vías)
           callesOcotlan.sort((a, b) {
-            // Priorizar nodos (puntos exactos) sobre vías
             if (a['osm_type'] == 'node' && b['osm_type'] != 'node') return -1;
             if (a['osm_type'] != 'node' && b['osm_type'] == 'node') return 1;
             return 0;
@@ -142,6 +141,19 @@ class _OpenStreetMapScreenState extends State<MapaPage> {
             preciseLatLng,
             name: bestResult['name'],
           );
+          
+          final locationUser = Provider.of<LocationProvider>(context, listen: false,);
+          await locationUser.getLocationUser();
+          final destinationProvider = Provider.of<LocationDestine>(context, listen: false,);
+          final reservationProvider = Provider.of<ReservationProvider>(context, listen: false,);
+
+          if (destinationProvider.alreadyExistLocation()) {
+            double distance = locationUser.calculateDistance(
+              destinationProvider.getDestination,
+            );
+            reservationProvider.setDistanceTrip(distance);
+            reservationProvider.getFee();
+          }
 
           await _fetchRoute();
           _mapController.move(preciseLatLng, 18); // Mayor zoom para precisión
@@ -242,8 +254,9 @@ class _OpenStreetMapScreenState extends State<MapaPage> {
 
   @override
   Widget build(BuildContext context) {
+    final locationProvider = Provider.of<ReservationProvider>(context);
     return Scaffold(
-      appBar: HeaderLocation(backButton: true, url: Routes.reservationPrivate),
+      appBar: HeaderLocation(backButton: true),
       body: Stack(
         children: [
           isLoading
@@ -253,11 +266,8 @@ class _OpenStreetMapScreenState extends State<MapaPage> {
                   options: MapOptions(
                     initialCenter: _currentLocation ?? LatLng(16.7865, -96.6738),
                     initialZoom: 16,
-                    minZoom: 12,
-                    maxZoom: 20,
-                    interactionOptions: const InteractionOptions(
-                      flags: InteractiveFlag.rotate
-                    )
+                    minZoom: 16,
+                    maxZoom: 50,
                   ),
                   children: [
                     TileLayer(
@@ -347,7 +357,7 @@ class _OpenStreetMapScreenState extends State<MapaPage> {
             ),
           ),
           if(_locationFound) Positioned(
-            bottom: 80, // Ajusta este valor según necesites
+            bottom: 80,
             left: 20,
             right: 20,
             child: SizedBox(
@@ -360,8 +370,8 @@ class _OpenStreetMapScreenState extends State<MapaPage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                onPressed: () {
-                  context.pop();
+                onPressed: () async {
+                  context.push(Routes.reservationPrivate);
                 },
                 child: const Text(
                   "Aceptar destino",

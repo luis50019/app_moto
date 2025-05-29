@@ -4,11 +4,16 @@ import 'package:app_ocotaxi/core/constants/routes.dart';
 import 'package:app_ocotaxi/views/auth/login_screen.dart';
 import 'package:app_ocotaxi/views/auth/register_screen.dart';
 import 'package:app_ocotaxi/views/componets/layouts/form.dart';
+import 'package:app_ocotaxi/views/componets/layouts/reservation_page.dart';
 import 'package:app_ocotaxi/views/layout/splash.dart';
 import 'package:app_ocotaxi/views/pages/home.dart';
 import 'package:app_ocotaxi/views/pages/info_driver.dart';
 import 'package:app_ocotaxi/views/pages/mapa_page.dart';
+import 'package:app_ocotaxi/views/pages/page_profile.dart';
 import 'package:app_ocotaxi/views/pages/page_select_driver.dart';
+import 'package:app_ocotaxi/views/pages/pages_drivers/Reservation_page.dart';
+import 'package:app_ocotaxi/views/pages/pages_drivers/homeDriver.dart';
+import 'package:app_ocotaxi/views/pages/pages_drivers/reservations_drivers.dart';
 import 'package:app_ocotaxi/views/pages/service_private.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -45,6 +50,12 @@ class RouterApp {
         path: Routes.selectDriver,
         builder: (context, state) => PageSelectDriver(),
       ),
+      GoRoute(
+        path: Routes.homeDriver,
+        builder: (context, state) => Homedriver(),
+      ),
+      GoRoute(path: Routes.profile,builder: (context,state)=>PageProfile()),
+      GoRoute(path: Routes.reservationDriver,builder: (context,state)=>ReservationPageDriver()),
     ],
     errorBuilder: (context, state) =>
         Scaffold(body: Center(child: Text('Página no encontrada'))),
